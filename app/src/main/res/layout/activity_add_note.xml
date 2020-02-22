@@ -34,5 +34,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deadline:"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@android:style/TextAppearance.Medium"/>
+
+    <DatePicker
+        android:id="@+id/date_picker_deadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner" />
+
 
 </LinearLayout>
