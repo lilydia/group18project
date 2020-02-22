@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.NumberPicker;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 public class AddEditNoteActivity extends AppCompatActivity {
@@ -20,7 +20,7 @@ public class AddEditNoteActivity extends AppCompatActivity {
 
     private EditText editTextTitle;
     private EditText editTextDescription;
-    private NumberPicker numberPickerPriority;
+    private RatingBar numberPickerPriority;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +29,8 @@ public class AddEditNoteActivity extends AppCompatActivity {
 
         editTextTitle = findViewById(R.id.edit_text_title);
         editTextDescription = findViewById(R.id.edit_text_description);
-        numberPickerPriority = findViewById(R.id.number_picker_priority);
+        numberPickerPriority = findViewById(R.id.priority_stars);
 
-        numberPickerPriority.setMinValue(1);
-        numberPickerPriority.setMaxValue(10);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
@@ -43,7 +41,6 @@ public class AddEditNoteActivity extends AppCompatActivity {
             setTitle("Edit Note");
             editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
             editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
-            numberPickerPriority.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1));
         } else {
             setTitle("Add Note");
         }
@@ -52,7 +49,7 @@ public class AddEditNoteActivity extends AppCompatActivity {
     private void saveNote() {
         String title = editTextTitle.getText().toString();
         String description = editTextDescription.getText().toString();
-        int priority = numberPickerPriority.getValue();
+        int priority = (int) numberPickerPriority.getRating();
         
         if (title.trim().isEmpty() || description.trim().isEmpty()) {
             Toast.makeText(this, "Please insert a title and description", Toast.LENGTH_SHORT).show();
