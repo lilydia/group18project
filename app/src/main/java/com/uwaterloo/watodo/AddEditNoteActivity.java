@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.NumberPicker;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -25,10 +25,10 @@ public class AddEditNoteActivity extends AppCompatActivity implements View.OnCli
 
     private EditText editTextTitle;
     private EditText editTextDescription;
-    private NumberPicker numberPickerPriority;
+    private RatingBar numberPickerPriority;
     private EditText selectDate;
     private int mYear, mMonth, mDay;
-
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +37,12 @@ public class AddEditNoteActivity extends AppCompatActivity implements View.OnCli
 
         editTextTitle = findViewById(R.id.edit_text_title);
         editTextDescription = findViewById(R.id.edit_text_description);
-        numberPickerPriority = findViewById(R.id.number_picker_priority);
+  
+        numberPickerPriority = findViewById(R.id.priority_stars);
+  
         selectDate = findViewById(R.id.date);
         selectDate.setOnClickListener(this);
 
-        numberPickerPriority.setMinValue(1);
-        numberPickerPriority.setMaxValue(10);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
@@ -53,7 +53,6 @@ public class AddEditNoteActivity extends AppCompatActivity implements View.OnCli
             setTitle("Edit Note");
             editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
             editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
-            numberPickerPriority.setValue(intent.getIntExtra(EXTRA_PRIORITY, 1));
         } else {
             setTitle("Add Note");
         }
@@ -62,8 +61,8 @@ public class AddEditNoteActivity extends AppCompatActivity implements View.OnCli
     private void saveNote() {
         String title = editTextTitle.getText().toString();
         String description = editTextDescription.getText().toString();
-        int priority = numberPickerPriority.getValue();
-
+        int priority = (int) numberPickerPriority.getRating();
+        
         if (title.trim().isEmpty() || description.trim().isEmpty()) {
             Toast.makeText(this, "Please insert a title and description", Toast.LENGTH_SHORT).show();
             return;
