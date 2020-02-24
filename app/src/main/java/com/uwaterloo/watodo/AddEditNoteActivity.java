@@ -3,16 +3,21 @@ package com.uwaterloo.watodo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-public class AddEditNoteActivity extends AppCompatActivity {
+import java.util.Calendar;
+
+public class AddEditNoteActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String EXTRA_ID = "com.uwaterloo.watodo.EXTRA_ID";
     public static final String EXTRA_TITLE = "com.uwaterloo.watodo.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.uwaterloo.watodo.EXTRA_DESCRIPTION";
@@ -21,15 +26,22 @@ public class AddEditNoteActivity extends AppCompatActivity {
     private EditText editTextTitle;
     private EditText editTextDescription;
     private RatingBar numberPickerPriority;
-
+    private EditText selectDate;
+    private int mYear, mMonth, mDay;
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
 
+
         editTextTitle = findViewById(R.id.edit_text_title);
         editTextDescription = findViewById(R.id.edit_text_description);
+  
         numberPickerPriority = findViewById(R.id.priority_stars);
+  
+        selectDate = findViewById(R.id.date);
+        selectDate.setOnClickListener(this);
 
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
@@ -86,6 +98,30 @@ public class AddEditNoteActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == selectDate) {
+            final Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    new DatePickerDialog.OnDateSetListener() {
+
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
+
+                            selectDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                        }
+                    }, mYear, mMonth, mDay);
+            datePickerDialog.show();
         }
     }
 }
