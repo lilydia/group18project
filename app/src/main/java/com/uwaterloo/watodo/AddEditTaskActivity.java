@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-public class AddEditNoteActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddEditTaskActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String EXTRA_ID = "com.uwaterloo.watodo.EXTRA_ID";
     public static final String EXTRA_TITLE = "com.uwaterloo.watodo.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.uwaterloo.watodo.EXTRA_DESCRIPTION";
@@ -32,7 +32,7 @@ public class AddEditNoteActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_note);
+        setContentView(R.layout.activity_add_task);
 
 
         editTextTitle = findViewById(R.id.edit_text_title);
@@ -50,15 +50,15 @@ public class AddEditNoteActivity extends AppCompatActivity implements View.OnCli
         Intent intent = getIntent();
 
         if (intent.hasExtra(EXTRA_ID)) {
-            setTitle("Edit Note");
+            setTitle("Edit Task");
             editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
             editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
         } else {
-            setTitle("Add Note");
+            setTitle("Add Task");
         }
     }
 
-    private void saveNote() {
+    private void saveTask() {
         String title = editTextTitle.getText().toString();
         String description = editTextDescription.getText().toString();
         int priority = (int) numberPickerPriority.getRating();
@@ -86,15 +86,15 @@ public class AddEditNoteActivity extends AppCompatActivity implements View.OnCli
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.add_note_menu, menu);
+        menuInflater.inflate(R.menu.add_task_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.save_note:
-                saveNote();
+            case R.id.save_task:
+                saveTask();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
