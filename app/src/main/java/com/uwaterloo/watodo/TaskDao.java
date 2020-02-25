@@ -10,20 +10,20 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface NoteDao {
+public interface TaskDao {
 
     @Insert
-    void insert(Note note);
+    void insert(Task task);
 
     @Update
-    void update(Note note);
+    void update(Task task);
 
     @Delete
-    void delete(Note note);
+    void delete(Task task);
 
-    @Query("DELETE FROM note_table")
-    void deleteAllNotes();
+    @Query("DELETE FROM task_table")
+    void deleteAllTasks();
 
-    @Query("SELECT * FROM note_table ORDER BY priority DESC")
-    LiveData<List<Note>> getAllNotes();
+    @Query("SELECT * FROM task_table ORDER BY priority DESC")
+    LiveData<List<Task>> getAllTasks();
 }

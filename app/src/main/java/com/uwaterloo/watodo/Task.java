@@ -3,15 +3,15 @@ package com.uwaterloo.watodo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "note_table")
-public class Note {
+@Entity(tableName = "task_table")
+public class Task {
     @PrimaryKey(autoGenerate =  true)
     private int id;
     private String title;
     private String description;
     private int priority;
 
-    public Note(String title, String description, int priority) {
+    public Task(String title, String description, int priority) {
         this.title = title;
         this.description = description;
         this.priority = priority;

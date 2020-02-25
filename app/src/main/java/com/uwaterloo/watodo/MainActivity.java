@@ -22,21 +22,21 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int ADD_NOTE_REQUEST = 1;
-    public static final int EDIT_NOTE_REQUEST = 2;
-    private NoteViewModel noteViewModel;
+    public static final int ADD_TASK_REQUEST = 1;
+    public static final int EDIT_TASK_REQUEST = 2;
+    private TaskViewModel taskViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FloatingActionButton buttonAddNote = findViewById(R.id.button_add_note);
-        buttonAddNote.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton buttonAddTask = findViewById(R.id.button_add_task);
+        buttonAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddEditNoteActivity.class);
-                startActivityForResult(intent, ADD_NOTE_REQUEST);
+                Intent intent = new Intent(MainActivity.this, AddEditTaskActivity.class);
+                startActivityForResult(intent, ADD_TASK_REQUEST);
             }
         });
 
@@ -44,14 +44,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        final NoteAdapter adapter = new NoteAdapter();
+        final TaskAdapter adapter = new TaskAdapter();
         recyclerView.setAdapter(adapter);
 
-        noteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
-        noteViewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
+        taskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
+        taskViewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
             @Override
-            public void onChanged(List<Note> notes) {
-                adapter.submitList(notes);
+            public void onChanged(List<Task> tasks) {
+                adapter.submitList(tasks);
             }
         });
 
@@ -65,20 +65,20 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                noteViewModel.delete(adapter.getNoteAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(MainActivity.this, "Note deleted", Toast.LENGTH_SHORT).show();
+                taskViewModel.delete(adapter.getTaskAt(viewHolder.getAdapterPosition()));
+                Toast.makeText(MainActivity.this, "Task deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
         
-        adapter.setOnItemClickListener(new NoteAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new TaskAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Note note) {
-                Intent intent = new Intent(MainActivity.this, AddEditNoteActivity.class);
-                intent.putExtra(AddEditNoteActivity.EXTRA_ID, note.getId());
-                intent.putExtra(AddEditNoteActivity.EXTRA_TITLE, note.getTitle());
-                intent.putExtra(AddEditNoteActivity.EXTRA_DESCRIPTION, note.getDescription());
-                intent.putExtra(AddEditNoteActivity.EXTRA_PRIORITY, note.getPriority());
-                startActivityForResult(intent, EDIT_NOTE_REQUEST);
+            public void onItemClick(Task task) {
+                Intent intent = new Intent(MainActivity.this, AddEditTaskActivity.class);
+                intent.putExtra(AddEditTaskActivity.EXTRA_ID, task.getId());
+                intent.putExtra(AddEditTaskActivity.EXTRA_TITLE, task.getTitle());
+                intent.putExtra(AddEditTaskActivity.EXTRA_DESCRIPTION, task.getDescription());
+                intent.putExtra(AddEditTaskActivity.EXTRA_PRIORITY, task.getPriority());
+                startActivityForResult(intent, EDIT_TASK_REQUEST);
             }
         });
     }
@@ -87,34 +87,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
-            String title = data.getStringExtra(AddEditNoteActivity.EXTRA_TITLE);
-            String description = data.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION);
-            int priority = data.getIntExtra(AddEditNoteActivity.EXTRA_PRIORITY, 1);
+        if (requestCode == ADD_TASK_REQUEST && resultCode == RESULT_OK) {
+            String title = data.getStringExtra(AddEditTaskActivity.EXTRA_TITLE);
+            String description = data.getStringExtra(AddEditTaskActivity.EXTRA_DESCRIPTION);
+            int priority = data.getIntExtra(AddEditTaskActivity.EXTRA_PRIORITY, 1);
 
-            Note note = new Note(title, description, priority);
-            noteViewModel.insert(note);
+            Task task = new Task(title, description, priority);
+            taskViewModel.insert(task);
 
-            Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show();
-        } else if (requestCode == EDIT_NOTE_REQUEST && resultCode == RESULT_OK) {
-            int id = data.getIntExtra(AddEditNoteActivity.EXTRA_ID, -1);
+            Toast.makeText(this, "Task saved", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == EDIT_TASK_REQUEST && resultCode == RESULT_OK) {
+            int id = data.getIntExtra(AddEditTaskActivity.EXTRA_ID, -1);
 
             // validate id, but this control flow *should* never happen
             if (id == -1) {
-                Toast.makeText(this, "Note can't be updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Task can't be updated", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            String title = data.getStringExtra(AddEditNoteActivity.EXTRA_TITLE);
-            String description = data.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION);
-            int priority = data.getIntExtra(AddEditNoteActivity.EXTRA_PRIORITY, 1);
+            String title = data.getStringExtra(AddEditTaskActivity.EXTRA_TITLE);
+            String description = data.getStringExtra(AddEditTaskActivity.EXTRA_DESCRIPTION);
+            int priority = data.getIntExtra(AddEditTaskActivity.EXTRA_PRIORITY, 1);
             
-            Note note = new Note(title, description, priority);
-            note.setId(id);
-            noteViewModel.update(note);
-            Toast.makeText(this, "Note updated", Toast.LENGTH_SHORT).show();
+            Task task = new Task(title, description, priority);
+            task.setId(id);
+            taskViewModel.update(task);
+            Toast.makeText(this, "Task updated", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Note not saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Task not saved", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -128,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.delete_all_notes:
-                noteViewModel.deleteAllNotes();
-                Toast.makeText(this, "All notes deleted", Toast.LENGTH_SHORT).show();
+            case R.id.delete_all_tasks:
+                taskViewModel.deleteAllTasks();
+                Toast.makeText(this, "All tasks deleted", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
