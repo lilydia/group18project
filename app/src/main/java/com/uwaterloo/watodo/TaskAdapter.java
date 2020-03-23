@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Calendar;
+
 public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
     private OnItemClickListener listener;
 
@@ -43,8 +45,9 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
     public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
         Task currentTask = getItem(position);
         holder.textViewTitle.setText(currentTask.getTitle());
-        holder.textViewDescription.setText(currentTask.getDescription());
+//        holder.textViewDescription.setText(currentTask.getDescription());
         holder.textViewPriority.setText(String.valueOf(currentTask.getPriority()));
+        holder.textViewDeadline.setText(currentTask.getDeadline());
     }
 
     public Task getTaskAt(int position) {
@@ -53,14 +56,16 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
 
     class TaskHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle;
-        private TextView textViewDescription;
+//        private TextView textViewDescription;
         private TextView textViewPriority;
+        private TextView textViewDeadline;
 
         public TaskHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
-            textViewDescription = itemView.findViewById(R.id.text_view_description);
+//            textViewDescription = itemView.findViewById(R.id.text_view_description);
             textViewPriority = itemView.findViewById(R.id.text_view_priority);
+            textViewDeadline = itemView.findViewById(R.id.text_view_deadline);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
