@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             String description = data.getStringExtra(AddEditTaskActivity.EXTRA_DESCRIPTION);
             int priority = data.getIntExtra(AddEditTaskActivity.EXTRA_PRIORITY, 1);
 
-            Task task = new Task(title, description, priority);
+            Task task = new Task(title, description, priority,2020, 5, 5);
             taskViewModel.insert(task);
 
             Toast.makeText(this, "Task saved", Toast.LENGTH_SHORT).show();
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
             String description = data.getStringExtra(AddEditTaskActivity.EXTRA_DESCRIPTION);
             int priority = data.getIntExtra(AddEditTaskActivity.EXTRA_PRIORITY, 1);
             
-            Task task = new Task(title, description, priority);
+            Task task = new Task(title, description, priority,2020,4,8);
             task.setId(id);
             taskViewModel.update(task);
             Toast.makeText(this, "Task updated", Toast.LENGTH_SHORT).show();
