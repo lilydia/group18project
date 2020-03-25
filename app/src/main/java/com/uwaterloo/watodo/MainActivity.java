@@ -74,14 +74,18 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new TaskAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Task task) {
-                Intent intent = new Intent(MainActivity.this, AddEditTaskActivity.class);
-                intent.putExtra(AddEditTaskActivity.EXTRA_ID, task.getId());
-                intent.putExtra(AddEditTaskActivity.EXTRA_TITLE, task.getTitle());
-                intent.putExtra(AddEditTaskActivity.EXTRA_DESCRIPTION, task.getDescription());
-                intent.putExtra(AddEditTaskActivity.EXTRA_PRIORITY, task.getPriority());
-                intent.putExtra(AddEditTaskActivity.EXTRA_YEAR, task.getDdlYear());
-                intent.putExtra(AddEditTaskActivity.EXTRA_MONTH, task.getDdlMonth());
-                intent.putExtra(AddEditTaskActivity.EXTRA_DAY, task.getDdlDay());
+                // pass data to ViewTaskActivity and start ViewTaskActivity
+                Intent intent = new Intent(MainActivity.this, ViewTaskActivity.class);
+//               Intent intent = new Intent(MainActivity.this, AddEditTaskActivity.class);
+                intent.putExtra(ViewTaskActivity.EXTRA_ID, task.getId());
+                intent.putExtra(ViewTaskActivity.EXTRA_TITLE, task.getTitle());
+                intent.putExtra(ViewTaskActivity.EXTRA_DESCRIPTION, task.getDescription());
+                intent.putExtra(ViewTaskActivity.EXTRA_PRIORITY, task.getPriority());
+                intent.putExtra(ViewTaskActivity.EXTRA_COMPLETENESS, task.getCompleteness());
+                intent.putExtra(ViewTaskActivity.EXTRA_YEAR, task.getDdlYear());
+                intent.putExtra(ViewTaskActivity.EXTRA_MONTH, task.getDdlMonth());
+                intent.putExtra(ViewTaskActivity.EXTRA_DAY, task.getDdlDay());
+//                startActivityForResult(intent, EDIT_TASK_REQUEST);
                 startActivityForResult(intent, EDIT_TASK_REQUEST);
             }
         });
@@ -104,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Task saved", Toast.LENGTH_SHORT).show();
         } else if (requestCode == EDIT_TASK_REQUEST && resultCode == RESULT_OK) {
-            int id = data.getIntExtra(AddEditTaskActivity.EXTRA_ID, -1);
+            int id = data.getIntExtra(ViewTaskActivity.EXTRA_ID, -1);
 
             // validate id, but this control flow *should* never happen
             if (id == -1) {
@@ -112,14 +116,15 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            String title = data.getStringExtra(AddEditTaskActivity.EXTRA_TITLE);
-            String description = data.getStringExtra(AddEditTaskActivity.EXTRA_DESCRIPTION);
-            int priority = data.getIntExtra(AddEditTaskActivity.EXTRA_PRIORITY, 1);
-            int year = data.getIntExtra(AddEditTaskActivity.EXTRA_YEAR,0);
-            int month = data.getIntExtra(AddEditTaskActivity.EXTRA_MONTH,0);
-            int date = data.getIntExtra(AddEditTaskActivity.EXTRA_DAY,0);
-            
-            Task task = new Task(title, description, "location edited", null, 20, priority,year,month,date);
+            String title = data.getStringExtra(ViewTaskActivity.EXTRA_TITLE);
+            String description = data.getStringExtra(ViewTaskActivity.EXTRA_DESCRIPTION);
+            int priority = data.getIntExtra(ViewTaskActivity.EXTRA_PRIORITY, 1);
+            int year = data.getIntExtra(ViewTaskActivity.EXTRA_YEAR,0);
+            int month = data.getIntExtra(ViewTaskActivity.EXTRA_MONTH,0);
+            int date = data.getIntExtra(ViewTaskActivity.EXTRA_DAY,0);
+            int completeness = data.getIntExtra(ViewTaskActivity.EXTRA_COMPLETENESS, 0);
+
+            Task task = new Task(title, description, "location edited", null, completeness, priority,year,month,date);
             task.setId(id);
             taskViewModel.update(task);
             Toast.makeText(this, "Task updated", Toast.LENGTH_SHORT).show();

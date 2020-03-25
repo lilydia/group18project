@@ -3,6 +3,7 @@ package com.uwaterloo.watodo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Calendar;
 
 public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
     private OnItemClickListener listener;
@@ -28,11 +28,10 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         @Override
         public boolean areContentsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
             return oldItem.getTitle().equals(newItem.getTitle()) &&
-                    oldItem.getDescription().equals(newItem.getDescription()) &&
-                    oldItem.getPriority() == newItem.getPriority() &&
                     oldItem.getDdlDay() == newItem.getDdlDay() &&
                     oldItem.getDdlMonth() == newItem.getDdlMonth() &&
-                    oldItem.getDdlYear() == newItem.getDdlYear();
+                    oldItem.getDdlYear() == newItem.getDdlYear() &&
+                    oldItem.getCompleteness() == newItem.getCompleteness();
         }
     };
 
@@ -48,10 +47,17 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
     public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
         Task currentTask = getItem(position);
         holder.textViewTitle.setText(currentTask.getTitle());
-//        holder.textViewDescription.setText(currentTask.getDescription());
-        holder.textViewPriority.setText(String.valueOf(currentTask.getPriority()));
-        String ddl = currentTask.getDdlYear() + "." + currentTask.getDdlMonth() + "." + currentTask.getDdlDay();
+        int ddlYear = currentTask.getDdlYear();
+        int ddlMonth = currentTask.getDdlMonth();
+        int ddlDay = currentTask.getDdlDay();
+        String ddl;
+        if (ddlYear != 0 && ddlMonth != 0 && ddlDay != 0) {
+            ddl = currentTask.getDdlYear() + "." + currentTask.getDdlMonth() + "." + currentTask.getDdlDay();
+        } else {
+            ddl = "No Deadline";
+        }
         holder.textViewDeadline.setText(ddl);
+        holder.completenessProgressBar.setProgress(currentTask.getCompleteness());
     }
 
     public Task getTaskAt(int position) {
@@ -60,16 +66,14 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
 
     class TaskHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle;
-//        private TextView textViewDescription;
-        private TextView textViewPriority;
         private TextView textViewDeadline;
+        private ProgressBar completenessProgressBar;
 
         public TaskHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
-//            textViewDescription = itemView.findViewById(R.id.text_view_description);
-            textViewPriority = itemView.findViewById(R.id.text_view_priority);
             textViewDeadline = itemView.findViewById(R.id.text_view_deadline);
+            completenessProgressBar = itemView.findViewById(R.id.progress_bar_completeness);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

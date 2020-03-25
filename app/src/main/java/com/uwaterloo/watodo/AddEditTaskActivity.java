@@ -21,7 +21,6 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
     public static final String EXTRA_ID = "com.uwaterloo.watodo.EXTRA_ID";
     public static final String EXTRA_TITLE = "com.uwaterloo.watodo.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.uwaterloo.watodo.EXTRA_DESCRIPTION";
-//    public static final String EXTRA_COMPLETENESS = "com.uwaterloo.watodo.EXTRA_COMPLETENESS";
     public static final String EXTRA_PRIORITY = "com.uwaterloo.watodo.EXTRA_PRIORITY";
     public static final String EXTRA_YEAR = "com.uwaterloo.watodo.EXTRA_YEAR";
     public static final String EXTRA_MONTH = "com.uwaterloo.watodo.EXTRA_MONTH";
@@ -59,6 +58,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
             setTitle("Edit Task");
             editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
             editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
+            numberPickerPriority.setRating(intent.getIntExtra(EXTRA_PRIORITY,0));
             ddlYear = intent.getIntExtra(EXTRA_YEAR,0);
             ddlMonth = intent.getIntExtra(EXTRA_MONTH,0);
             ddlDay = intent.getIntExtra(EXTRA_DAY,0);
