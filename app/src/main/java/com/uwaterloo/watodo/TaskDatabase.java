@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import java.util.Calendar;
+
 
 @Database(entities = Task.class, version = 1)
 public abstract class TaskDatabase extends RoomDatabase {
@@ -29,6 +29,7 @@ public abstract class TaskDatabase extends RoomDatabase {
         return instance;
     }
 
+    // following code is for adding sample tasks when database is created, might be deleted later
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -46,9 +47,9 @@ public abstract class TaskDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            taskDao.insert(new Task( "Title 1", "Description 1", 1,2020,4, 3));
-            taskDao.insert(new Task( "Title 2", "Description 2", 2,2020,4,4));
-            taskDao.insert(new Task( "Title 3", "Description 3", 3,2020,4,5));
+            taskDao.insert(new Task( "Title 1", "Description 1", "location1", null, 0,1, 2020, 3,20));
+            taskDao.insert(new Task( "Title 2", "Description 2", "location2", null, 25,2, 2020, 3,20));
+            taskDao.insert(new Task( "Title 3", "Description 3", "location3", null, 50,3, 2020, 3,20));
             return null;
         }
     }

@@ -47,7 +47,8 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         holder.textViewTitle.setText(currentTask.getTitle());
 //        holder.textViewDescription.setText(currentTask.getDescription());
         holder.textViewPriority.setText(String.valueOf(currentTask.getPriority()));
-        holder.textViewDeadline.setText(currentTask.getDeadline());
+        String ddl = currentTask.getDdlYear() + "." + currentTask.getDdlMonth() + "." + currentTask.getDdlDate();
+        holder.textViewDeadline.setText(ddl);
     }
 
     public Task getTaskAt(int position) {
