@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         taskViewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
+//                Toast.makeText(MainActivity.this, "OnChanged",Toast.LENGTH_SHORT).show();
                 adapter.submitList(tasks);
             }
         });
@@ -78,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(AddEditTaskActivity.EXTRA_TITLE, task.getTitle());
                 intent.putExtra(AddEditTaskActivity.EXTRA_DESCRIPTION, task.getDescription());
                 intent.putExtra(AddEditTaskActivity.EXTRA_PRIORITY, task.getPriority());
+                intent.putExtra(AddEditTaskActivity.EXTRA_YEAR, task.getDdlYear());
+                intent.putExtra(AddEditTaskActivity.EXTRA_MONTH, task.getDdlMonth());
+                intent.putExtra(AddEditTaskActivity.EXTRA_DAY, task.getDdlDay());
                 startActivityForResult(intent, EDIT_TASK_REQUEST);
             }
         });
@@ -90,9 +94,12 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == ADD_TASK_REQUEST && resultCode == RESULT_OK) {
             String title = data.getStringExtra(AddEditTaskActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddEditTaskActivity.EXTRA_DESCRIPTION);
-            int priority = data.getIntExtra(AddEditTaskActivity.EXTRA_PRIORITY, 1);
+            int priority = data.getIntExtra(AddEditTaskActivity.EXTRA_PRIORITY, 0);
+            int year = data.getIntExtra(AddEditTaskActivity.EXTRA_YEAR,0);
+            int month = data.getIntExtra(AddEditTaskActivity.EXTRA_MONTH,0);
+            int date = data.getIntExtra(AddEditTaskActivity.EXTRA_DAY,0);
 
-            Task task = new Task(title, description, "location added", null, 0, priority,2020, 5, 5);
+            Task task = new Task(title, description, "location added", null, 0, priority,year, month, date);
             taskViewModel.insert(task);
 
             Toast.makeText(this, "Task saved", Toast.LENGTH_SHORT).show();
@@ -108,8 +115,11 @@ public class MainActivity extends AppCompatActivity {
             String title = data.getStringExtra(AddEditTaskActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddEditTaskActivity.EXTRA_DESCRIPTION);
             int priority = data.getIntExtra(AddEditTaskActivity.EXTRA_PRIORITY, 1);
+            int year = data.getIntExtra(AddEditTaskActivity.EXTRA_YEAR,0);
+            int month = data.getIntExtra(AddEditTaskActivity.EXTRA_MONTH,0);
+            int date = data.getIntExtra(AddEditTaskActivity.EXTRA_DAY,0);
             
-            Task task = new Task(title, description, "location edited", null, 20, priority,2020,4,8);
+            Task task = new Task(title, description, "location edited", null, 20, priority,year,month,date);
             task.setId(id);
             taskViewModel.update(task);
             Toast.makeText(this, "Task updated", Toast.LENGTH_SHORT).show();

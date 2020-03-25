@@ -18,9 +18,9 @@ public class Task {
     private int priority;
     private int ddlYear;
     private int ddlMonth;
-    private int ddlDate;
+    private int ddlDay;
 
-    public Task(String title, String description, String location, String groupTag, int completeness, int priority, int ddlYear, int ddlMonth, int ddlDate) {
+    public Task(String title, String description, String location, String groupTag, int completeness, int priority, int ddlYear, int ddlMonth, int ddlDay) {
         this.title = title;
         this.description = description;
         this.location = location;
@@ -29,7 +29,7 @@ public class Task {
         this.priority = priority;
         this.ddlYear = ddlYear;
         this.ddlMonth = ddlMonth;
-        this.ddlDate = ddlDate;
+        this.ddlDay = ddlDay;
     }
 
     public void setId(int id) {
@@ -72,8 +72,8 @@ public class Task {
         return ddlMonth;
     }
 
-    public int getDdlDate() {
-        return ddlDate;
+    public int getDdlDay() {
+        return ddlDay;
     }
 
 

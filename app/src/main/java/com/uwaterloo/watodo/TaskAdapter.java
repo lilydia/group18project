@@ -29,7 +29,10 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         public boolean areContentsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
             return oldItem.getTitle().equals(newItem.getTitle()) &&
                     oldItem.getDescription().equals(newItem.getDescription()) &&
-                    oldItem.getPriority() == newItem.getPriority();
+                    oldItem.getPriority() == newItem.getPriority() &&
+                    oldItem.getDdlDay() == newItem.getDdlDay() &&
+                    oldItem.getDdlMonth() == newItem.getDdlMonth() &&
+                    oldItem.getDdlYear() == newItem.getDdlYear();
         }
     };
 
@@ -47,7 +50,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         holder.textViewTitle.setText(currentTask.getTitle());
 //        holder.textViewDescription.setText(currentTask.getDescription());
         holder.textViewPriority.setText(String.valueOf(currentTask.getPriority()));
-        String ddl = currentTask.getDdlYear() + "." + currentTask.getDdlMonth() + "." + currentTask.getDdlDate();
+        String ddl = currentTask.getDdlYear() + "." + currentTask.getDdlMonth() + "." + currentTask.getDdlDay();
         holder.textViewDeadline.setText(ddl);
     }
 
