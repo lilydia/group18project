@@ -59,7 +59,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
             setTitle("Edit Task");
             editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
             editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
-            ddlYear = intent.getIntExtra(EXTRA_DAY,0);
+            ddlYear = intent.getIntExtra(EXTRA_YEAR,0);
             ddlMonth = intent.getIntExtra(EXTRA_MONTH,0);
             ddlDay = intent.getIntExtra(EXTRA_DAY,0);
             String dateText = "";
@@ -135,7 +135,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
 
-                            selectDate.setText(dayOfMonth + "-" + (monthOfYear+1) + "-" + year);
+                            selectDate.setText(year + "-" + (monthOfYear+1) + "-" + dayOfMonth);
                             ddlYear = year;
                             ddlMonth = monthOfYear+1;
                             ddlDay = dayOfMonth;
