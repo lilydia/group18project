@@ -33,6 +33,7 @@ public class ViewTaskActivity extends AppCompatActivity {
     private TextView viewTaskLocation;
     private RatingBar viewTaskPriority;
     private SeekBar viewTaskCompleteness;
+    private TextView viewTaskCompPercentage;
     private TextView viewTaskDescription;
     private CardView editTaskCard;
     private int id, ddlYear, ddlMonth, ddlDay, priority, completeness;
@@ -49,10 +50,28 @@ public class ViewTaskActivity extends AppCompatActivity {
         viewTaskLocation = findViewById(R.id.view_task_location);
         viewTaskPriority = findViewById(R.id.view_task_priority);
         viewTaskCompleteness = findViewById(R.id.view_task_completeness_slider);
+        viewTaskCompPercentage = findViewById(R.id.completeness_percentage);
         viewTaskDescription = findViewById(R.id.view_task_description);
         editTaskCard = findViewById(R.id.edit_task_card);
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+        viewTaskCompleteness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                viewTaskCompPercentage.setText("Completeness: " + progress + "%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         setTitle("Task Information");
 
         // retrieve and display selected task data

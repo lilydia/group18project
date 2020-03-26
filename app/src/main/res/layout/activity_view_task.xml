@@ -19,6 +19,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textStyle="bold" />
 
+
         <TextView
             android:id="@+id/view_task_deadline"
             android:layout_width="wrap_content"
@@ -35,6 +36,7 @@
             android:layout_toRightOf="@id/view_task_deadline"
             android:text="location" />
 
+
         <RatingBar
             android:id="@+id/view_task_priority"
             style="?android:attr/ratingBarStyleSmall"
@@ -46,13 +48,23 @@
             android:saveEnabled="true"
             android:stepSize="1" />
 
+        <TextView
+            android:id="@+id/completeness_percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="Completeness: 10%"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_above="@id/view_task_completeness_slider"/>
+
         <SeekBar
             android:id="@+id/view_task_completeness_slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/view_task_priority"
-            android:layout_marginTop="10dp"
-            android:progress="75" />
+            android:layout_marginTop="5dp"
+            android:progress="10" />
     </RelativeLayout>
 
     <RelativeLayout
