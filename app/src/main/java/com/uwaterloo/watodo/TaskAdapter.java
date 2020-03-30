@@ -32,7 +32,8 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
                     oldItem.getDdlDay() == newItem.getDdlDay() &&
                     oldItem.getDdlMonth() == newItem.getDdlMonth() &&
                     oldItem.getDdlYear() == newItem.getDdlYear() &&
-                    oldItem.getCompleteness() == newItem.getCompleteness();
+                    oldItem.getCompleteness() == newItem.getCompleteness() &&
+                    oldItem.getPriority() == newItem.getPriority();
         }
     };
 
@@ -51,7 +52,6 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         int ddlYear = currentTask.getDdlYear();
         int ddlMonth = currentTask.getDdlMonth();
         int ddlDay = currentTask.getDdlDay();
-        int priority= currentTask.getPriority();
         String ddl;
         if (ddlYear != 0 && ddlMonth != 0 && ddlDay != 0) {
             ddl = currentTask.getDdlYear() + "." + currentTask.getDdlMonth() + "." + currentTask.getDdlDay();
@@ -60,7 +60,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         }
         holder.textViewDeadline.setText(ddl);
         holder.completenessProgressBar.setProgress(currentTask.getCompleteness());
-        holder.textRatingBar.setRating(priority);
+        holder.textRatingBar.setRating(currentTask.getPriority());
     }
 
     public Task getTaskAt(int position) {
