@@ -22,11 +22,16 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
     public static final String EXTRA_TITLE = "com.uwaterloo.watodo.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.uwaterloo.watodo.EXTRA_DESCRIPTION";
     public static final String EXTRA_PRIORITY = "com.uwaterloo.watodo.EXTRA_PRIORITY";
+    public static final String EXTRA_YEAR = "com.uwaterloo.watodo.EXTRA_YEAR";
+    public static final String EXTRA_MONTH = "com.uwaterloo.watodo.EXTRA_MONTH";
+    public static final String EXTRA_DAY = "com.uwaterloo.watodo.EXTRA_DAY";
+
 
     private EditText editTextTitle;
     private EditText editTextDescription;
     private RatingBar numberPickerPriority;
     private EditText selectDate;
+    private int ddlYear, ddlMonth, ddlDay;
     private int mYear, mMonth, mDay;
   
     @Override
@@ -53,6 +58,16 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
             setTitle("Edit Task");
             editTextTitle.setText(intent.getStringExtra(EXTRA_TITLE));
             editTextDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
+            numberPickerPriority.setRating(intent.getIntExtra(EXTRA_PRIORITY,0));
+            ddlYear = intent.getIntExtra(EXTRA_YEAR,0);
+            ddlMonth = intent.getIntExtra(EXTRA_MONTH,0);
+            ddlDay = intent.getIntExtra(EXTRA_DAY,0);
+            String dateText = "";
+            if (ddlYear != 0 && ddlMonth != 0 && ddlDay != 0) {
+                dateText = ddlYear+"-"+ddlMonth+"-"+ddlDay;
+            }
+            selectDate.setText(dateText);
+//            numberPickerPriority.setRating(Integer.parseInt(intent.getStringExtra(EXTRA_PRIORITY)));
         } else {
             setTitle("Add Task");
         }
@@ -72,6 +87,9 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
         data.putExtra(EXTRA_TITLE, title);
         data.putExtra(EXTRA_DESCRIPTION, description);
         data.putExtra(EXTRA_PRIORITY, priority);
+        data.putExtra(EXTRA_YEAR, ddlYear);
+        data.putExtra(EXTRA_MONTH, ddlMonth);
+        data.putExtra(EXTRA_DAY, ddlDay);
 
         // add id only if the task has been edited (existing task; not new)
         int id = getIntent().getIntExtra(EXTRA_ID, -1);
@@ -117,10 +135,14 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
 
-                            selectDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                            selectDate.setText(year + "-" + (monthOfYear+1) + "-" + dayOfMonth);
+                            ddlYear = year;
+                            ddlMonth = monthOfYear+1;
+                            ddlDay = dayOfMonth;
 
                         }
                     }, mYear, mMonth, mDay);
+
             datePickerDialog.show();
         }
     }
