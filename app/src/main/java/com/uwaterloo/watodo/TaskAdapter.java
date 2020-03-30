@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,6 +51,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         int ddlYear = currentTask.getDdlYear();
         int ddlMonth = currentTask.getDdlMonth();
         int ddlDay = currentTask.getDdlDay();
+        int priority= currentTask.getPriority();
         String ddl;
         if (ddlYear != 0 && ddlMonth != 0 && ddlDay != 0) {
             ddl = currentTask.getDdlYear() + "." + currentTask.getDdlMonth() + "." + currentTask.getDdlDay();
@@ -58,6 +60,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         }
         holder.textViewDeadline.setText(ddl);
         holder.completenessProgressBar.setProgress(currentTask.getCompleteness());
+        holder.textRatingBar.setRating(priority);
     }
 
     public Task getTaskAt(int position) {
@@ -68,12 +71,14 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         private TextView textViewTitle;
         private TextView textViewDeadline;
         private ProgressBar completenessProgressBar;
+        private RatingBar textRatingBar;
 
         public TaskHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             textViewDeadline = itemView.findViewById(R.id.text_view_deadline);
             completenessProgressBar = itemView.findViewById(R.id.progress_bar_completeness);
+            textRatingBar = itemView.findViewById(R.id.text_view_rating);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
