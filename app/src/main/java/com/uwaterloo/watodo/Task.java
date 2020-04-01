@@ -3,8 +3,6 @@ package com.uwaterloo.watodo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.List;
-
 
 @Entity(tableName = "task_table")
 public class Task {
@@ -12,7 +10,8 @@ public class Task {
     private int id;
     private String title;
     private String description; // data type might be changed later
-    private String location; // data type might be changed later
+    private double latitude;
+    private double longitude;
     private String groupTag;
     private int completeness;
     private int priority;
@@ -20,10 +19,11 @@ public class Task {
     private int ddlMonth;
     private int ddlDay;
 
-    public Task(String title, String description, String location, String groupTag, int completeness, int priority, int ddlYear, int ddlMonth, int ddlDay) {
+    public Task(String title, String description, double latitude, double longitude, String groupTag, int completeness, int priority, int ddlYear, int ddlMonth, int ddlDay) {
         this.title = title;
         this.description = description;
-        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.groupTag = groupTag;
         this.completeness = completeness;
         this.priority = priority;
@@ -48,9 +48,11 @@ public class Task {
         return description;
     }
 
-    public String getLocation() {
-        return location;
+    public double getLatitude() {
+        return latitude;
     }
+
+    public double getLongitude() { return longitude; }
 
     public String getGroupTag() {
         return groupTag;

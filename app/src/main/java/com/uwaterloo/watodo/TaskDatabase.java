@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 
 
-@Database(entities = Task.class, version = 1)
+@Database(entities = Task.class, version = 2)
 public abstract class TaskDatabase extends RoomDatabase {
 
     private static TaskDatabase instance;
@@ -47,9 +47,9 @@ public abstract class TaskDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            taskDao.insert(new Task( "Title 1", "Description 1", "location1", null, 0,1, 2020, 3,20));
-            taskDao.insert(new Task( "Title 2", "Description 2", "location2", null, 25,2, 2020, 3,20));
-            taskDao.insert(new Task( "Title 3", "Description 3", "location3", null, 50,3, 2020, 3,20));
+            taskDao.insert(new Task( "Title 1", "Description 1", 0, 0, null, 0,1, 2020, 3,20));
+            taskDao.insert(new Task( "Title 2", "Description 2", 0, 0, null, 25,2, 2020, 3,20));
+            taskDao.insert(new Task( "Title 3", "Description 3", 0, 0, null, 50,3, 2020, 3,20));
             return null;
         }
     }

@@ -1,11 +1,9 @@
 package com.uwaterloo.watodo;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +13,17 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class AddEditTaskActivity extends AppCompatActivity implements View.OnClickListener {
@@ -25,6 +34,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
     public static final String EXTRA_YEAR = "com.uwaterloo.watodo.EXTRA_YEAR";
     public static final String EXTRA_MONTH = "com.uwaterloo.watodo.EXTRA_MONTH";
     public static final String EXTRA_DAY = "com.uwaterloo.watodo.EXTRA_DAY";
+    public static final String EXTRA_COORDS = "com.uwaterloo.watodo.EXTRA_COORDS";
 
 
     private EditText editTextTitle;
@@ -33,11 +43,22 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
     private EditText selectDate;
     private int ddlYear, ddlMonth, ddlDay;
     private int mYear, mMonth, mDay;
+    private String apiKey = "AIzaSyA-hySyjyBDVSBKnH2GUv87RsEcLhUF7xM";
+    private double[] coords;
   
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+        coords = new double[2];
+        coords[0] = 0;
+        coords[1] = 0;
+
+        // Initialize Places.
+        Places.initialize(getApplicationContext(), apiKey);
+
+        // Create a new Places client instance.
+        PlacesClient placesClient = Places.createClient(this);
 
 
         editTextTitle = findViewById(R.id.edit_text_title);
@@ -71,6 +92,32 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
         } else {
             setTitle("Add Task");
         }
+
+        // Initialize the AutocompleteSupportFragment.
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+        // Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.i("AddEditTask", "Place: " + place.getName() + ", " + place.getId());
+                Log.i("AddEditTask", "Lat, Long: " + place.getLatLng());
+                coords = new double[2];
+                coords[0] = place.getLatLng().latitude;
+                coords[1] = place.getLatLng().longitude;
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("AddEditTask", "An error occurred while selecting a Place: " + status);
+            }
+        });
     }
 
     private void saveTask() {
@@ -90,6 +137,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
         data.putExtra(EXTRA_YEAR, ddlYear);
         data.putExtra(EXTRA_MONTH, ddlMonth);
         data.putExtra(EXTRA_DAY, ddlDay);
+        data.putExtra(EXTRA_COORDS, coords);
 
         // add id only if the task has been edited (existing task; not new)
         int id = getIntent().getIntExtra(EXTRA_ID, -1);
