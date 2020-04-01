@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int ADD_TASK_REQUEST = 1;
     public static final int EDIT_TASK_REQUEST = 2;
     private TaskViewModel taskViewModel;
+    private Observer<List<Task>> tasksObserver;
     public static GeofencingClient geofencingClient;
     private static final String[] INITIAL_PERMS={
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -125,14 +126,14 @@ public class MainActivity extends AppCompatActivity {
         final TaskAdapter adapter = new TaskAdapter();
         recyclerView.setAdapter(adapter);
 
-        taskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
-        taskViewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
+        tasksObserver = new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
-//                Toast.makeText(MainActivity.this, "OnChanged",Toast.LENGTH_SHORT).show();
                 adapter.submitList(tasks);
             }
-        });
+        };
+        taskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
+        taskViewModel.getAllTasksByPriority().observe(this, tasksObserver);
 
         // swipe to delete callback
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
@@ -234,6 +235,18 @@ public class MainActivity extends AppCompatActivity {
             case R.id.delete_all_tasks:
                 taskViewModel.deleteAllTasks();
                 Toast.makeText(this, "All tasks deleted", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.rank_by_completeness:
+                taskViewModel.getAllTasksByComp().observe(this, tasksObserver);
+                Toast.makeText(MainActivity.this, "Ranked by completeness", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.rank_by_priority:
+                taskViewModel.getAllTasksByPriority().observe(this, tasksObserver);
+                Toast.makeText(MainActivity.this, "Ranked by priority", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.rank_by_deadline:
+                taskViewModel.getAllTasksByDdl().observe(this, tasksObserver);
+                Toast.makeText(MainActivity.this, "Ranked by deadline", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
