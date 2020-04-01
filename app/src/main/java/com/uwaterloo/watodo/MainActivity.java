@@ -175,6 +175,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         geofencingClient = LocationServices.getGeofencingClient(this);
+
+
+        RecyclerView GroupRecyclerView = findViewById(R.id.group_recycler_view);
+        LinearLayoutManager GroupLayoutManager = new LinearLayoutManager(this);
+        GroupLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        GroupRecyclerView.setLayoutManager(GroupLayoutManager);
+        GroupRecyclerView.setHasFixedSize(true);
+
+        final GroupAdapter groupAdapter = new GroupAdapter();
+        GroupRecyclerView.setAdapter(groupAdapter);
+
+        taskViewModel.getAllGroup().observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> strings) {
+                groupAdapter.submitList(strings);
+            }
+        });
     }
 
     @Override
