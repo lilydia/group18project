@@ -5,4 +5,16 @@
         android:id="@+id/delete_all_tasks"
         android:title="Delete all tasks"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/rank_by_completeness"
+        android:title="Rank By Completeness"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/rank_by_priority"
+        android:title="Rank By Priority"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/rank_by_deadline"
+        android:title="Rank By Deadline"
+        app:showAsAction="never" />
 </menu>
