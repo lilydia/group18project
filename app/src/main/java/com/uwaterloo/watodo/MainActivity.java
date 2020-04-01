@@ -165,6 +165,11 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(ViewTaskActivity.EXTRA_MONTH, task.getDdlMonth());
                 intent.putExtra(ViewTaskActivity.EXTRA_DAY, task.getDdlDay());
 //                startActivityForResult(intent, EDIT_TASK_REQUEST);
+                // temporary coord for fixing
+                double[] temp = new double[2];
+                temp[0] = 0;
+                temp[1] = 0;
+                intent.putExtra(ViewTaskActivity.EXTRA_COORDS, temp);
                 startActivityForResult(intent, EDIT_TASK_REQUEST);
                 // TODO: Add coords here and on the ViewTask screen UI as well on a map
             }
@@ -208,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
             int month = data.getIntExtra(ViewTaskActivity.EXTRA_MONTH,0);
             int date = data.getIntExtra(ViewTaskActivity.EXTRA_DAY,0);
             int completeness = data.getIntExtra(ViewTaskActivity.EXTRA_COMPLETENESS, 0);
-            double[] coords = data.getDoubleArrayExtra(AddEditTaskActivity.EXTRA_COORDS);
+            double[] coords = data.getDoubleArrayExtra(ViewTaskActivity.EXTRA_COORDS);
 
 
             Log.i("MAIN", "UPDATE Coords in Main: " + coords[0] + ", " + coords[1]);

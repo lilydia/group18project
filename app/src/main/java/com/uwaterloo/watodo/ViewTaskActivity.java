@@ -29,6 +29,7 @@ public class ViewTaskActivity extends AppCompatActivity {
     public static final String EXTRA_YEAR = "com.uwaterloo.watodo.EXTRA_YEAR";
     public static final String EXTRA_MONTH = "com.uwaterloo.watodo.EXTRA_MONTH";
     public static final String EXTRA_DAY = "com.uwaterloo.watodo.EXTRA_DAY";
+    public static final String EXTRA_COORDS = "com.uwaterloo.watodo.EXTRA_COORDS";
 
     private TextView viewTaskTitle;
     private TextView viewTaskDdl;
@@ -115,7 +116,7 @@ public class ViewTaskActivity extends AppCompatActivity {
                 intent.putExtra(AddEditTaskActivity.EXTRA_YEAR, ddlYear);
                 intent.putExtra(AddEditTaskActivity.EXTRA_MONTH, ddlMonth);
                 intent.putExtra(AddEditTaskActivity.EXTRA_DAY, ddlDay);
-                intent.putExtra(EXTRA_COORDS, coords);
+                intent.putExtra(AddEditTaskActivity.EXTRA_COORDS, coords);
                 startActivityForResult(intent, MainActivity.EDIT_TASK_REQUEST);
             }
         });
@@ -140,7 +141,7 @@ public class ViewTaskActivity extends AppCompatActivity {
             ddlYear = data.getIntExtra(AddEditTaskActivity.EXTRA_YEAR, 0);
             ddlMonth = data.getIntExtra(AddEditTaskActivity.EXTRA_MONTH, 0);
             ddlDay = data.getIntExtra(AddEditTaskActivity.EXTRA_DAY, 0);
-            coords = data.getDoubleArrayExtra(EXTRA_COORDS);
+            coords = data.getDoubleArrayExtra(AddEditTaskActivity.EXTRA_COORDS);
 
             // update the displayed data
             viewTaskTitle.setText(title);
