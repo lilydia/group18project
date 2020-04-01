@@ -1,10 +1,5 @@
 package com.uwaterloo.watodo;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +10,13 @@ import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
+import static com.uwaterloo.watodo.AddEditTaskActivity.EXTRA_COORDS;
 
 
 public class ViewTaskActivity extends AppCompatActivity {
@@ -38,6 +40,7 @@ public class ViewTaskActivity extends AppCompatActivity {
     private CardView editTaskCard;
     private int id, ddlYear, ddlMonth, ddlDay, priority, completeness;
     private String title, location, description;
+    private double[] coords;
 
 
     @Override
@@ -83,6 +86,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         ddlYear = intent.getIntExtra(EXTRA_YEAR, 0);
         ddlMonth = intent.getIntExtra(EXTRA_MONTH, 0);
         ddlDay = intent.getIntExtra(EXTRA_DAY, 0);
+        coords = intent.getDoubleArrayExtra(EXTRA_COORDS);
         String dateText;
         if (ddlYear != 0 && ddlMonth != 0 && ddlDay != 0) {
             dateText = ddlYear + "." + ddlMonth + "." + ddlDay;
@@ -111,6 +115,7 @@ public class ViewTaskActivity extends AppCompatActivity {
                 intent.putExtra(AddEditTaskActivity.EXTRA_YEAR, ddlYear);
                 intent.putExtra(AddEditTaskActivity.EXTRA_MONTH, ddlMonth);
                 intent.putExtra(AddEditTaskActivity.EXTRA_DAY, ddlDay);
+                intent.putExtra(EXTRA_COORDS, coords);
                 startActivityForResult(intent, MainActivity.EDIT_TASK_REQUEST);
             }
         });
@@ -135,6 +140,7 @@ public class ViewTaskActivity extends AppCompatActivity {
             ddlYear = data.getIntExtra(AddEditTaskActivity.EXTRA_YEAR, 0);
             ddlMonth = data.getIntExtra(AddEditTaskActivity.EXTRA_MONTH, 0);
             ddlDay = data.getIntExtra(AddEditTaskActivity.EXTRA_DAY, 0);
+            coords = data.getDoubleArrayExtra(EXTRA_COORDS);
 
             // update the displayed data
             viewTaskTitle.setText(title);
@@ -164,6 +170,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         ndata.putExtra(EXTRA_MONTH, ddlMonth);
         ndata.putExtra(EXTRA_DAY, ddlDay);
         ndata.putExtra(EXTRA_ID, id);
+        ndata.putExtra(EXTRA_COORDS, coords);
 
         setResult(RESULT_OK, ndata);
         finish();
