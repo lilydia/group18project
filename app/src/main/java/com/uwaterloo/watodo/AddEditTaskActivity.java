@@ -83,6 +83,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
             ddlYear = intent.getIntExtra(EXTRA_YEAR,0);
             ddlMonth = intent.getIntExtra(EXTRA_MONTH,0);
             ddlDay = intent.getIntExtra(EXTRA_DAY,0);
+            coords = intent.getDoubleArrayExtra(EXTRA_COORDS);
             String dateText = "";
             if (ddlYear != 0 && ddlMonth != 0 && ddlDay != 0) {
                 dateText = ddlYear+"-"+ddlMonth+"-"+ddlDay;
