@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WATodo</string>
+    <string name="task_title">Tasks</string>
+    <string name="group_title">Groups</string>
 </resources>

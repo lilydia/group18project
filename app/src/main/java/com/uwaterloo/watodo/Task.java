@@ -3,26 +3,33 @@ package com.uwaterloo.watodo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Calendar;
 
 @Entity(tableName = "task_table")
 public class Task {
     @PrimaryKey(autoGenerate =  true)
     private int id;
     private String title;
-    private String description;
+    private String description; // data type might be changed later
+    private double latitude;
+    private double longitude;
+    private String groupTag;
+    private int completeness;
     private int priority;
     private int ddlYear;
     private int ddlMonth;
-    private int ddlDate;
+    private int ddlDay;
 
-    public Task(String title, String description, int priority, int ddlYear, int ddlMonth, int ddlDate) {
+    public Task(String title, String description, double latitude, double longitude, String groupTag, int completeness, int priority, int ddlYear, int ddlMonth, int ddlDay) {
         this.title = title;
         this.description = description;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.groupTag = groupTag;
+        this.completeness = completeness;
         this.priority = priority;
         this.ddlYear = ddlYear;
         this.ddlMonth = ddlMonth;
-        this.ddlDate = ddlDate;
+        this.ddlDay = ddlDay;
     }
 
     public void setId(int id) {
@@ -41,16 +48,35 @@ public class Task {
         return description;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() { return longitude; }
+
+    public String getGroupTag() {
+        return groupTag;
+    }
+
+    public int getCompleteness() {
+        return completeness;
+    }
+
     public int getPriority() {
         return priority;
     }
 
-    public String getDeadline() {
-        String deadline = ddlYear + "." + ddlMonth + "." + ddlDate;
-        return deadline;
+    public int getDdlYear() {
+        return ddlYear;
     }
 
-    public int getDdlYear() { return ddlYear; }
-    public int getDdlMonth() { return ddlMonth; }
-    public int getDdlDate() { return ddlDate; }
+    public int getDdlMonth() {
+        return ddlMonth;
+    }
+
+    public int getDdlDay() {
+        return ddlDay;
+    }
+
+
 }

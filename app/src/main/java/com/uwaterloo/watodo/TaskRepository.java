@@ -9,16 +9,16 @@ import java.util.List;
 
 public class TaskRepository {
     private TaskDao taskDao;
-    private LiveData<List<Task>> allTasks;
+    private ReminderService reminderService;
 
     public TaskRepository(Application application){
         TaskDatabase database = TaskDatabase.getInstance(application);
         taskDao = database.taskDao();
-        allTasks = taskDao.getAllTasks();
+        reminderService = new ReminderService();
     }
 
     public void insert(Task task) {
-        new InsertTaskAsyncTask(taskDao).execute(task);
+        new InsertTaskAsyncTask(taskDao, reminderService).execute(task);
     }
 
     public void update(Task task) {
@@ -33,20 +33,29 @@ public class TaskRepository {
         new DeleteAllTasksAsyncTask(taskDao).execute();
     }
 
-    public LiveData<List<Task>> getAllTasks() {
-        return allTasks;
+    public LiveData<List<Task>> getAllTasksByPriority() {
+        return taskDao.getAllTasksByPriority();
     }
+
+    public LiveData<List<Task>> getAllTasksByComp() {return taskDao.getAllTasksByComp();}
+
+    public LiveData<List<Task>> getAllTasksByDdl() {return taskDao.getAllTasksByDdl();}
+
+    public LiveData<List<String>> getAllGroup() {return taskDao.getAllGroup();}
 
     private static class InsertTaskAsyncTask extends AsyncTask<Task, Void, Void> {
         private TaskDao taskDao;
+        private ReminderService reminderService;
 
-        private InsertTaskAsyncTask(TaskDao taskDao) {
+        private InsertTaskAsyncTask(TaskDao taskDao, ReminderService reminderService) {
             this.taskDao = taskDao;
+            this.reminderService = reminderService;
         }
 
         @Override
         protected Void doInBackground(Task... tasks) {
             taskDao.insert(tasks[0]);
+            reminderService.newLocationReminder(tasks[0].getLatitude(), tasks[0].getLongitude(), tasks[0].getTitle());
             return null;
         }
     }

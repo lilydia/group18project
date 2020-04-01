@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp">
+    android:layout_marginEnd="5dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginTop="3dp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp">
 
-        <TextView
-            android:id="@+id/text_view_priority"
+<!--        <TextView-->
+<!--            android:id="@+id/text_view_priority"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:text="1"-->
+<!--            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>-->
+        <ImageView
+            android:id="@+id/chevron"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_chevron_right"
             android:layout_alignParentEnd="true"
-            android:text="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/text_view_title"
@@ -27,16 +34,25 @@
             android:text="Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:maxLines="1"
-            android:layout_toStartOf="@id/text_view_priority"
+            android:layout_toStartOf="@id/text_view_rating"
             android:layout_alignParentStart="true"
             android:ellipsize="end"/>
 
-<!--        <TextView-->
+        <!--        <TextView-->
 <!--            android:id="@+id/text_view_description"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->
 <!--            android:layout_below="@id/text_view_title"-->
 <!--            android:text="Description"/>-->
+
+        <RatingBar
+            android:id="@+id/text_view_rating"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_toStartOf="@id/chevron"
+            android:layout_toRightOf="@id/text_view_title" />
 
         <TextView
             android:id="@+id/text_view_deadline"
@@ -48,12 +64,12 @@
         <ProgressBar
             android:id="@+id/progress_bar_completeness"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="310dp"
+            android:layout_width="300dp"
             android:layout_height="8dp"
             android:layout_below="@id/text_view_deadline"
             android:layout_marginTop="5dp"
             android:background="#FFFFFF"
-            android:progress="25" />
+            android:progress="75" />
 
 
     </RelativeLayout>

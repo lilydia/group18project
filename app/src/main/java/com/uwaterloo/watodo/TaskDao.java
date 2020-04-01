@@ -21,9 +21,19 @@ public interface TaskDao {
     @Delete
     void delete(Task task);
 
+    // this method might be modified to delete certain tasks later
     @Query("DELETE FROM task_table")
     void deleteAllTasks();
 
     @Query("SELECT * FROM task_table ORDER BY priority DESC")
-    LiveData<List<Task>> getAllTasks();
+    LiveData<List<Task>> getAllTasksByPriority();
+
+    @Query("SELECT * FROM task_table ORDER BY completeness DESC")
+    LiveData<List<Task>> getAllTasksByComp();
+
+    @Query("SELECT * FROM task_table ORDER BY ddlYear,ddlMonth,ddlDay ASC")
+    LiveData<List<Task>> getAllTasksByDdl();
+
+    @Query("SELECT DISTINCT groupTag FROM task_table WHERE groupTag IS NOT NULL")
+    LiveData<List<String>> getAllGroup();
 }

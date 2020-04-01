@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.uwaterloo.watodo.CustomizedView.SquareCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="100dp"
-    android:layout_height="100dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp"
-    app:cardCornerRadius="10dp">
+    android:id="@+id/group_card"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="14dp"
+    android:layout_marginBottom="14dp"
+    app:cardCornerRadius="8dp">
 
     <TextView
         android:id="@+id/text_view_group_name"
@@ -17,7 +18,8 @@
         android:layout_marginRight="8dp"
         android:maxLines="2"
         android:text="Group"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimaryDark" />
 
 
-</androidx.cardview.widget.CardView>
+</com.uwaterloo.watodo.CustomizedView.SquareCardView>
