@@ -295,6 +295,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
                         .setTitle(title)
                         .setContent(description)
                         .setColor(R.color.colorPrimary)
+                        .setImportance(Notify.NotificationImportance.MAX)
                         .show(); // Finally showing the notification
             }
         }.start();
