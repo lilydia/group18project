@@ -7,11 +7,6 @@
         <item name="colorPrimaryDark">#1E78CE</item>
         <item name="colorAccent">#1E78CE</item>
 
-        parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
 </resources>
