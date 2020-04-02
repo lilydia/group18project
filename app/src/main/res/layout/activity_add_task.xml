@@ -1,158 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".AddEditTaskActivity">
-
-    <EditText
-        android:id="@+id/edit_text_title"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Title"
-        android:inputType="text" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".AddEditTaskActivity">
 
-    <EditText
-        android:id="@+id/edit_text_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Description"
-        android:inputType="textMultiLine" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Due Date" />
-
-    <EditText
-        android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="DD/MM/YYYY"
-        android:inputType="date"
-        android:focusable="false" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Remind Me:"
-        android:layout_marginTop="8dp"
-        android:textAppearance="@android:style/TextAppearance.Medium" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="vertical">
-
-        <RadioButton
-            android:id="@+id/radio_1_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1 day before due date(Demo: 10 seconds from now)" />
-
-        <RadioButton
-            android:id="@+id/radio_3_days"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3 days before due date(Demo: 30 seconds from now)" />
-
-        <RadioButton
-            android:id="@+id/radio_7_days"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="7 days before due date(Demo: 70 seconds from now)" />
-
-    </RadioGroup>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Priority:"
-        android:textAppearance="@android:style/TextAppearance.Medium" />
-
-    <RatingBar
-        android:id="@+id/priority_stars"
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
-        android:numStars="5"
-        android:saveEnabled="true"
-        android:stepSize="0.1" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Attachments:"
-        android:textAppearance="@android:style/TextAppearance.Medium" />
-    <TextView
-        android:id="@+id/attachmentFilename"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textAppearance="@android:style/TextAppearance.Small" />
-    <LinearLayout
-        android:id="@+id/LinearLayout02"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true">
-        <Button
-            android:id="@+id/clear_attachments"
+        <EditText
+            android:id="@+id/edit_text_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Clear"
-            android:onClick="onClearClicked">
-        </Button>
-        <Button
-            android:id="@+id/add_attachment"
+            android:hint="Title"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/edit_text_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add Attachment"
-            android:onClick="onImageGalleryClicked">
-        </Button>
-        <Button
-            android:id="@+id/add_from_camera"
+            android:hint="Description"
+            android:inputType="textMultiLine" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Due Date" />
+
+        <EditText
+            android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Camera"
-            android:onClick="onTakePhotoClicked">
-        </Button>
+            android:ems="10"
+            android:hint="DD/MM/YYYY"
+            android:inputType="date"
+            android:focusable="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remind Me:"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@android:style/TextAppearance.Medium" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radio_1_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 day before due date(Demo: 10 seconds from now)" />
+
+            <RadioButton
+                android:id="@+id/radio_3_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3 days before due date(Demo: 30 seconds from now)" />
+
+            <RadioButton
+                android:id="@+id/radio_7_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7 days before due date(Demo: 70 seconds from now)" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true">
+            <TextView
+                android:id="@+id/notify"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:text="Reminder status: off " />
+            <Button
+                android:id="@+id/button_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:text="cancel reminder" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Priority:"
+            android:textAppearance="@android:style/TextAppearance.Medium" />
+
+        <RatingBar
+            android:id="@+id/priority_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:numStars="5"
+            android:saveEnabled="true"
+            android:stepSize="0.1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Attachments:"
+            android:textAppearance="@android:style/TextAppearance.Medium" />
+        <TextView
+            android:id="@+id/attachmentFilename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@android:style/TextAppearance.Small" />
+        <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/clear_attachments"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:onClick="onClearClicked"
+                android:text="Clear"></Button>
+
+            <Button
+                android:id="@+id/add_attachment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onImageGalleryClicked"
+                android:text="Add Attachment"></Button>
+
+            <Button
+                android:id="@+id/add_from_camera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Camera"
+                android:onClick="onTakePhotoClicked">
+            </Button>
+        </LinearLayout>
+      <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Location:"
+            android:textAppearance="@android:style/TextAppearance.Medium" />
+
+        <fragment android:id="@+id/autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            />
     </LinearLayout>
-  <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Location:"
-        android:textAppearance="@android:style/TextAppearance.Medium" />
-
-    <fragment android:id="@+id/autocomplete_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        />
-
-    <TextView
-        android:id="@+id/notify"
-        android:layout_width="303dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:text="Reminder status: off " />
-
-    <Button
-        android:id="@+id/button_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:text="cancel reminder" />
-
-</LinearLayout>
+</ScrollView>
