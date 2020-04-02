@@ -210,29 +210,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/radio_50m"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Within 50 meters" />
 
                 <RadioButton
-                    android:id="@+id/radio_100m"
+                    android:id="@+id/radio_onsite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Within 100 meters" />
+                    android:text="when I am on site." />
+
 
                 <RadioButton
-                    android:id="@+id/radio_500m"
+                    android:id="@+id/radio_close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Within 500 meters" />
-
-                <RadioButton
-                    android:id="@+id/radio_1km"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Within 1000 meters" />
+                    android:text="when I am in close proximity." />
             </RadioGroup>
         </androidx.cardview.widget.CardView>
 

@@ -84,6 +84,9 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
     private RadioButton selectNotifyTime1;
     private RadioButton selectNotifyTime3;
     private RadioButton selectNotifyTime7;
+    private RadioButton selectNotifyLocOnsite;
+    private RadioButton selectNotifyLocClose;
+    private String placeName;
     private Button cancelReminder;
   
     @Override
@@ -117,6 +120,10 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
         selectNotifyTime3.setOnClickListener(this);
         selectNotifyTime7 = findViewById(R.id.radio_7_days);
         selectNotifyTime7.setOnClickListener(this);
+        selectNotifyLocOnsite = findViewById(R.id.radio_onsite);
+        selectNotifyLocOnsite.setOnClickListener(this);
+        selectNotifyLocClose = findViewById(R.id.radio_close);
+        selectNotifyLocClose.setOnClickListener(this);
         cancelReminder = findViewById(R.id.button_cancel);
         cancelReminder.setOnClickListener(this);
       
@@ -164,6 +171,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
                 coords = new double[2];
                 coords[0] = place.getLatLng().latitude;
                 coords[1] = place.getLatLng().longitude;
+                placeName = place.getName();
             }
 
             @Override
@@ -266,6 +274,27 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
 
         if (view == selectNotifyTime7){
             counterTime(70, selectNotifyTime7);
+        }
+
+        if (view == selectNotifyLocOnsite){
+            Notify.create(getApplicationContext())
+                    .setTitle("You are at:")
+                    //.setContent(placeName) //phone version
+                    .setContent("University of Waterloo") //emulator version
+                    .setColor(R.color.colorPrimary)
+                    .setImportance(Notify.NotificationImportance.MAX)
+                    .show(); // Finally showing the notification
+        }
+
+        if (view == selectNotifyLocClose){
+
+            Notify.create(getApplicationContext())
+                    .setTitle("You are approaching:")
+                    //.setContent(placeName) //phone version
+                    .setContent("University of Waterloo") //emulator version
+                    .setColor(R.color.colorPrimary)
+                    .setImportance(Notify.NotificationImportance.MAX)
+                    .show(); // Finally showing the notification
         }
 
     }
