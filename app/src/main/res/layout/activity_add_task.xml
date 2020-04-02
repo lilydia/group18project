@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,9 +31,35 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Due Date" />
+            android:text="Due Date"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <EditText
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="DD/MM/YYYY"
+            android:inputType="date" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Priority"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <RatingBar
+            android:id="@+id/priority_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:numStars="5"
+            android:saveEnabled="true"
+            android:stepSize="1" />
+      
+         <EditText
             android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,31 +75,39 @@
             android:layout_marginTop="8dp"
             android:textAppearance="@android:style/TextAppearance.Medium" />
 
-        <RadioGroup
-            android:id="@+id/radioGroup"
+       <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp">
 
-            <RadioButton
-                android:id="@+id/radio_1_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1 day before due date(Demo: 10 seconds from now)" />
+          <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/radioGroup"
+              android:layout_width="match_parent"
+              android:layout_height="100dp"
+              android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/radio_3_days"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3 days before due date(Demo: 30 seconds from now)" />
+              <RadioButton
+                  android:id="@+id/radio_1_day"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="1 day before due date(Demo: 10 seconds from now)" />
 
-            <RadioButton
-                android:id="@+id/radio_7_days"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7 days before due date(Demo: 70 seconds from now)" />
+              <RadioButton
+                  android:id="@+id/radio_3_days"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="3 days before due date(Demo: 30 seconds from now)" />
 
-        </RadioGroup>
+              <RadioButton
+                  android:id="@+id/radio_7_days"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="7 days before due date(Demo: 70 seconds from now)" />
+
+          </RadioGroup>
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_height="wrap_content"
@@ -93,43 +129,34 @@
                 android:text="cancel reminder" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Priority:"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
 
-        <RatingBar
-            android:id="@+id/priority_stars"
-            android:layout_width="wrap_content"
-            android:layout_height="46dp"
-            android:numStars="5"
-            android:saveEnabled="true"
-            android:stepSize="0.1" />
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Attachments:"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
+            android:text="Attachments"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
         <TextView
             android:id="@+id/attachmentFilename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textAppearance="@android:style/TextAppearance.Small" />
+
+
         <LinearLayout
             android:id="@+id/LinearLayout02"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_alignParentBottom="true">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
 
             <Button
                 android:id="@+id/clear_attachments"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onClearClicked"
                 android:text="Clear"></Button>
@@ -147,21 +174,67 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Camera"
-                android:onClick="onTakePhotoClicked">
-            </Button>
+                android:onClick="onTakePhotoClicked"
+                android:text="Camera"></Button>
         </LinearLayout>
-      <TextView
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Location:"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
+            android:text="Location"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-        <fragment android:id="@+id/autocomplete_fragment"
+        <fragment
+            android:id="@+id/autocomplete_fragment"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Remind Me"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-            />
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp">
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/radio_50m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Within 50 meters" />
+
+                <RadioButton
+                    android:id="@+id/radio_100m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Within 100 meters" />
+
+                <RadioButton
+                    android:id="@+id/radio_500m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Within 500 meters" />
+
+                <RadioButton
+                    android:id="@+id/radio_1km"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Within 1000 meters" />
+            </RadioGroup>
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
 </ScrollView>
