@@ -249,35 +249,40 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
         }
         if (view == cancelReminder){
             counter.cancel();
+            selectNotifyTime1.setChecked(false);
+            selectNotifyTime3.setChecked(false);
+            selectNotifyTime7.setChecked(false);
             TextView textView=findViewById(R.id.notify);
             textView.setText("Reminder canceled." );
         }
 
         if (view == selectNotifyTime1){
-            counterTime(10);
+            counterTime(10, selectNotifyTime1);
         }
 
         if (view == selectNotifyTime3){
-            counterTime(30);
+            counterTime(30, selectNotifyTime3);
         }
 
         if (view == selectNotifyTime7){
-            counterTime(70);
+            counterTime(70, selectNotifyTime7);
         }
 
     }
 
-    public void counterTime(int time){
+    public void counterTime(int time, final RadioButton selectNotifyTime){
 
         counter = new CountDownTimer(time*1000, 1000) {
             TextView textView=findViewById(R.id.notify);
 
             public void onTick(long millisUntilFinished) {
+                selectNotifyTime.setChecked(true);
                 textView.setText("The reminder will be sent in " + millisUntilFinished / 1000 + " seconds.");
 
             }
 
             public void onFinish() {
+                selectNotifyTime.setChecked(false);
                 String title = editTextTitle.getText().toString();
                 String description = editTextDescription.getText().toString();
 
