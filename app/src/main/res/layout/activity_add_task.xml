@@ -98,6 +98,48 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:text="Attachments:"
+        android:textAppearance="@android:style/TextAppearance.Medium" />
+    <TextView
+        android:id="@+id/attachmentFilename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@android:style/TextAppearance.Small" />
+    <LinearLayout
+        android:id="@+id/LinearLayout02"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/clear_attachments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Clear"
+            android:onClick="onClearClicked">
+        </Button>
+        <Button
+            android:id="@+id/add_attachment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add Attachment"
+            android:onClick="onImageGalleryClicked">
+        </Button>
+        <Button
+            android:id="@+id/add_from_camera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Camera"
+            android:onClick="onTakePhotoClicked">
+        </Button>
+    </LinearLayout>
+  <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Location:"
         android:textAppearance="@android:style/TextAppearance.Medium" />
 
