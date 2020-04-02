@@ -240,7 +240,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 invokeCamera();
             } else {
-                Toast.makeText(this, "Cannot open camera!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Cannot open camera", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -280,7 +280,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
     public void onClearClicked(View v) {
         attachmentFilename.setText("");
         attachmentUri = null;
-        Toast.makeText(this, "Attachments Cleared!", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Attachments cleared", Toast.LENGTH_LONG).show();
     }
 
     // Open file picker for attachment selection
@@ -309,7 +309,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
 
         if (resultCode == RESULT_OK) {
             if (requestCode == CAMERA_REQUEST_CODE) {
-                Toast.makeText(this, "Image Saved.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Image saved", Toast.LENGTH_LONG).show();
             }
             if (requestCode == FILE_PICKER_REQUEST) {
                 Uri attachmentUri = data.getData();
