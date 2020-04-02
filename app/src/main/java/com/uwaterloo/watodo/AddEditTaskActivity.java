@@ -2,8 +2,10 @@ package com.uwaterloo.watodo;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,10 +14,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.RadioButton;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import androidx.core.content.FileProvider;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +40,7 @@ import com.application.isradeleon.notify.Notify;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -42,6 +53,10 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
     public static final String EXTRA_MONTH = "com.uwaterloo.watodo.EXTRA_MONTH";
     public static final String EXTRA_DAY = "com.uwaterloo.watodo.EXTRA_DAY";
     public static final String EXTRA_COORDS = "com.uwaterloo.watodo.EXTRA_COORDS";
+    // GALLERY/CAMERA REQUESTS
+    public static final int FILE_PICKER_REQUEST = 600;
+    public static final int CAMERA_REQUEST_CODE = 601;
+    public static final int CAMERA_PERMISSION_REQUEST_CODE = 602;
 
     public CountDownTimer counter = new CountDownTimer(300,100) {
         @Override
@@ -60,6 +75,10 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
     private EditText selectDate;
     private int ddlYear, ddlMonth, ddlDay;
     private int mYear, mMonth, mDay;
+    // Attachments
+    private TextView attachmentFilename;
+    private Uri attachmentUri;
+
     private String apiKey = "AIzaSyA-hySyjyBDVSBKnH2GUv87RsEcLhUF7xM";
     private double[] coords;
     private RadioButton selectNotifyTime1;
@@ -90,6 +109,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
         selectDate = findViewById(R.id.date);
         selectDate.setOnClickListener(this);
 
+
         //reminder time selection
         selectNotifyTime1 = findViewById(R.id.radio_1_day);
         selectNotifyTime1.setOnClickListener(this);
@@ -99,6 +119,9 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
         selectNotifyTime7.setOnClickListener(this);
         cancelReminder = findViewById(R.id.button_cancel);
         cancelReminder.setOnClickListener(this);
+      
+        // get a reference to the image view that holds the image that the user will see.
+        attachmentFilename = findViewById(R.id.attachmentFilename);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
@@ -273,5 +296,115 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+
+    // CAMERA INTENTS
+    public void onTakePhotoClicked(View v) {
+        if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            invokeCamera();
+        } else {
+            // let's request permission.
+            String[] permissionRequest = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            requestPermissions(permissionRequest, CAMERA_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            // we have heard back from our request for camera and write external storage.
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                invokeCamera();
+            } else {
+                Toast.makeText(this, "Cannot open camera!", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void invokeCamera() {
+
+        // get a file reference
+        Uri pictureUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", createImageFile());
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // tell the camera where to save the image.
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, pictureUri);
+
+        // tell the camera to request WRITE permission.
+        intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+        startActivityForResult(intent, CAMERA_REQUEST_CODE);
+
+    }
+
+    private File createImageFile() {
+        // the public picture director
+        File picturesDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+        // timestamp makes unique name.
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String timestamp = sdf.format(new Date());
+
+        // put together the directory and the timestamp to make a unique image location.
+        File imageFile = new File(picturesDirectory, "picture" + timestamp + ".jpg");
+
+        return imageFile;
+    }
+
+    // clear attachments from selection
+    public void onClearClicked(View v) {
+        attachmentFilename.setText("");
+        attachmentUri = null;
+        Toast.makeText(this, "Attachments Cleared!", Toast.LENGTH_LONG).show();
+    }
+
+    // Open file picker for attachment selection
+    public void onImageGalleryClicked(View v) {
+        // invoke the file picker intent
+        Intent filePickerIntent = new Intent(Intent.ACTION_PICK);
+
+        // location of attachment storage
+        File fileDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        String fileDirectoryPath = fileDirectory.getPath();
+        // finally, get a URI representation
+        Uri data = Uri.parse(fileDirectoryPath);
+        // save
+        attachmentUri = data;
+
+        // set the data and type.  Get all image types.
+        filePickerIntent.setDataAndType(data, "*/*");
+
+        // we will invoke this activity, and get something back from it.
+        startActivityForResult(filePickerIntent, FILE_PICKER_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == CAMERA_REQUEST_CODE) {
+                Toast.makeText(this, "Image Saved.", Toast.LENGTH_LONG).show();
+            }
+            if (requestCode == FILE_PICKER_REQUEST) {
+                Uri attachmentUri = data.getData();
+                String filename = queryName(attachmentUri);
+                // show the attachment filename to the user
+                attachmentFilename.setText(filename);
+            }
+        }
+    }
+
+    private String queryName(Uri uri) {
+        Cursor returnCursor =
+                getContentResolver().query(uri, null, null, null, null);
+        assert returnCursor != null;
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        returnCursor.moveToFirst();
+        String name = returnCursor.getString(nameIndex);
+        returnCursor.close();
+        return name;
+    }
 
 }
