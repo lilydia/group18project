@@ -44,4 +44,6 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     // For Kotlin use kapt instead of annotationProcessor
     implementation 'com.google.android.libraries.places:places:2.2.0'
+    //Notify
+    implementation 'com.github.isradeleon:Notify-Android:1.0.3'
 }

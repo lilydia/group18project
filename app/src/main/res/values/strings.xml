@@ -2,4 +2,7 @@
     <string name="app_name">WATodo</string>
     <string name="task_title">Tasks</string>
     <string name="group_title">Groups</string>
+    <string name="notify_channel_id">MyDefaultChannelID</string>
+    <string name="notify_channel_name">MyDefaultChannelName</string>
+    <string name="notify_channel_description">MyDefaultChannelDescription</string>
 </resources>
