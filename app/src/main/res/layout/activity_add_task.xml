@@ -58,15 +58,6 @@
             android:numStars="5"
             android:saveEnabled="true"
             android:stepSize="1" />
-      
-         <EditText
-            android:id="@+id/date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="DD/MM/YYYY"
-            android:inputType="date"
-            android:focusable="false" />
 
         <TextView
             android:layout_width="wrap_content"

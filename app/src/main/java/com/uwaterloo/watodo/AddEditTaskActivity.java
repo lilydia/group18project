@@ -265,15 +265,15 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
         }
 
         if (view == selectNotifyTime1){
-            counterTime(10, selectNotifyTime1);
+            counterTime(1, selectNotifyTime1);
         }
 
         if (view == selectNotifyTime3){
-            counterTime(30, selectNotifyTime3);
+            counterTime(3, selectNotifyTime3);
         }
 
         if (view == selectNotifyTime7){
-            counterTime(70, selectNotifyTime7);
+            counterTime(7, selectNotifyTime7);
         }
 
         if (view == selectNotifyLocOnsite){
@@ -301,7 +301,7 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
 
     public void counterTime(int time, final RadioButton selectNotifyTime){
 
-        counter = new CountDownTimer(time*1000, 1000) {
+        counter = new CountDownTimer(time*10000, 1000) {
             TextView textView=findViewById(R.id.notify);
 
             public void onTick(long millisUntilFinished) {
@@ -315,13 +315,13 @@ public class AddEditTaskActivity extends AppCompatActivity implements View.OnCli
                 String title = editTextTitle.getText().toString();
                 String description = editTextDescription.getText().toString();
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
                 String currentDateandTime = "Reminder sent on: ";
                 currentDateandTime = currentDateandTime + sdf.format(new Date());
                 textView.setText(currentDateandTime);
 
                 Notify.create(getApplicationContext())
-                        .setTitle(title)
+                        .setTitle("Upcoming deadline: " + title )
                         .setContent(description)
                         .setColor(R.color.colorPrimary)
                         .setImportance(Notify.NotificationImportance.MAX)
